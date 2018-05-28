@@ -19,6 +19,7 @@
   <modules>
     <module>kie-wb-common-forms-cms</module>
     <module>jbpm-wb-cms</module>
+    <module>cms-poc-showcase</module>
   </modules>
 
   <repositories>
@@ -219,6 +220,11 @@
         <artifactId>jbpm-wb-cms-client</artifactId>
         <version>${version.org.kie}</version>
         <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>cms-poc-showcase</artifactId>
+        <version>${version.org.kie}</version>
       </dependency>
     </dependencies>
 
