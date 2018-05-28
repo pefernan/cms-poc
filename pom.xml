@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-parent</artifactId>
+    <version>7.8.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.appformer.cms</groupId>
+  <artifactId>cms-poc</artifactId>
+
+  <name>CMS POC</name>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>kie-wb-common-forms-cms</module>
+    <module>jbpm-wb-cms</module>
+  </modules>
+
+  <repositories>
+    <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
+    <repository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.errai</groupId>
+        <artifactId>wildfly-dist</artifactId>
+        <version>${version.org.jboss.errai.wildfly}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.errai.bom</groupId>
+        <artifactId>errai-internal-bom</artifactId>
+        <version>${version.org.jboss.errai}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.elemental2</groupId>
+        <artifactId>elemental2-dom</artifactId>
+        <version>${version.com.google.elemental2}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.uberfire</groupId>
+        <artifactId>uberfire-bom</artifactId>
+        <version>${version.org.uberfire}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie.soup</groupId>
+        <artifactId>kie-soup-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-dmn-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jbpm</groupId>
+        <artifactId>jbpm-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie.uberfire</groupId>
+        <artifactId>kie-uberfire-extensions-bom</artifactId>
+        <version>${version.org.kie}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- POC -->
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-common-api</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-common-api</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-common-backend</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-common-client</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-common-client</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-persistence-api</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-persistence-api</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-persistence-backend</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-persistence-jpa</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-layout-components-api</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-layout-components-api</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-layout-components-client</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>kie-wb-common-forms-cms-layout-components-client</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>jbpm-wb-cms-api</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>jbpm-wb-cms-api</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>jbpm-wb-cms-backend</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>jbpm-wb-cms-client</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.appformer.cms</groupId>
+        <artifactId>jbpm-wb-cms-client</artifactId>
+        <version>${version.org.kie}</version>
+        <classifier>sources</classifier>
+      </dependency>
+    </dependencies>
+
+  </dependencyManagement>
+</project>
