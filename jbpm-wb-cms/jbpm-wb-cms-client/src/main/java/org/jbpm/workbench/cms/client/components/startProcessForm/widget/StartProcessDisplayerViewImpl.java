@@ -18,19 +18,32 @@ package org.jbpm.workbench.cms.client.components.startProcessForm.widget;
 
 import javax.inject.Inject;
 
-import org.jboss.errai.common.client.dom.DOMUtil;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import org.jboss.errai.common.client.dom.Button;
 import org.jboss.errai.common.client.dom.Div;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.jbpm.workbench.forms.client.i18n.Constants;
+import org.kie.workbench.common.forms.dynamic.client.DynamicFormRenderer;
+import org.kie.workbench.common.forms.dynamic.service.shared.impl.MapModelRenderingContext;
+import org.uberfire.ext.widgets.common.client.common.popups.errors.ErrorPopup;
 
 @Templated
 public class StartProcessDisplayerViewImpl implements StartProcessDisplayerView,
                                                       IsElement {
 
+    protected Constants constants = GWT.create(Constants.class);
+
     @Inject
     @DataField
-    private Div content;
+    private DynamicFormRenderer form;
+
+    @Inject
+    @DataField
+    private Button submit;
 
     private Presenter presenter;
 
@@ -40,8 +53,20 @@ public class StartProcessDisplayerViewImpl implements StartProcessDisplayerView,
     }
 
     @Override
-    public void show() {
-        DOMUtil.removeAllChildren(content);
-        DOMUtil.appendWidgetToElement(content, presenter.getContent());
+    public void showFormNotFoundError(String processId) {
+        ErrorPopup.showMessage(constants.UnableToFindFormForProcess(processId));
+    }
+
+    @Override
+    public void show(MapModelRenderingContext context) {
+        submit.setHidden(true);
+        form.render(context);
+        submit.setHidden(false);
+    }
+
+    @EventHandler("submit")
+    private void onSubmit(ClickEvent click) {
+        submit.setHidden(true);
+        presenter.submit();
     }
 }

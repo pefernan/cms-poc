@@ -18,32 +18,48 @@ package org.jbpm.workbench.cms.client.components.startProcessForm.widget;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
-import com.google.gwt.user.client.ui.IsWidget;
+import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.IsElement;
+import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.common.client.dom.HTMLElement;
-import org.jbpm.workbench.forms.client.display.api.StartProcessFormDisplayProvider;
-import org.jbpm.workbench.forms.client.display.views.display.EmbeddedFormDisplayer;
-import org.jbpm.workbench.forms.display.api.ProcessDisplayerConfig;
-import org.jbpm.workbench.pr.model.ProcessDefinitionKey;
+import org.jbpm.workbench.forms.client.i18n.Constants;
+import org.jbpm.workbench.forms.display.FormRenderingSettings;
+import org.jbpm.workbench.forms.display.api.KieWorkbenchFormRenderingSettings;
+import org.jbpm.workbench.forms.display.service.KieWorkbenchFormsEntryPoint;
+import org.jbpm.workbench.forms.service.shared.FormServiceEntryPoint;
+import org.jbpm.workbench.pr.events.NewProcessInstanceEvent;
+import org.uberfire.workbench.events.NotificationEvent;
 
 @Dependent
 public class StartProcessDisplayer implements StartProcessDisplayerView.Presenter,
                                               IsElement {
 
-    private StartProcessFormDisplayProvider startProcessFormDisplayProvider;
-    private EmbeddedFormDisplayer embeddedFormDisplayer;
+    private Caller<FormServiceEntryPoint> formServices;
+    private Caller<KieWorkbenchFormsEntryPoint> service;
+    private Event<NewProcessInstanceEvent> newProcessInstanceEvent;
+    private Event<NotificationEvent> notificationEvent;
+
     private StartProcessDisplayerView view;
 
     private String serverTemplateId;
     private String domainId;
     private String processId;
 
+    private KieWorkbenchFormRenderingSettings renderingSettings;
+
     @Inject
-    public StartProcessDisplayer(StartProcessFormDisplayProvider startProcessFormDisplayProvider, EmbeddedFormDisplayer embeddedFormDisplayer, StartProcessDisplayerView view) {
-        this.startProcessFormDisplayProvider = startProcessFormDisplayProvider;
-        this.embeddedFormDisplayer = embeddedFormDisplayer;
+    public StartProcessDisplayer(Caller<FormServiceEntryPoint> formServices,
+                                 Caller<KieWorkbenchFormsEntryPoint> service,
+                                 Event<NewProcessInstanceEvent> newProcessInstanceEvent,
+                                 Event<NotificationEvent> notificationEvent,
+                                 StartProcessDisplayerView view) {
+        this.formServices = formServices;
+        this.service = service;
+        this.newProcessInstanceEvent = newProcessInstanceEvent;
+        this.notificationEvent = notificationEvent;
         this.view = view;
     }
 
@@ -57,14 +73,20 @@ public class StartProcessDisplayer implements StartProcessDisplayerView.Presente
         this.domainId = domainId;
         this.processId = processId;
 
-        embeddedFormDisplayer.setOnCloseCommand(this::show);
-
-        show();
+        loadForm();
     }
 
-    private void show() {
-        startProcessFormDisplayProvider.setup(new ProcessDisplayerConfig(new ProcessDefinitionKey(serverTemplateId, domainId, processId), ""), embeddedFormDisplayer);
-        view.show();
+    private void loadForm() {
+        formServices.call((RemoteCallback<FormRenderingSettings>) settings -> {
+            if (settings == null) {
+                view.showFormNotFoundError(processId);
+            } else {
+                if (settings instanceof KieWorkbenchFormRenderingSettings) {
+                    renderingSettings = (KieWorkbenchFormRenderingSettings) settings;
+                    view.show(renderingSettings.getRenderingContext());
+                }
+            }
+        }).getFormDisplayProcess(serverTemplateId, domainId, processId);
     }
 
     @Override
@@ -73,7 +95,26 @@ public class StartProcessDisplayer implements StartProcessDisplayerView.Presente
     }
 
     @Override
-    public IsWidget getContent() {
-        return embeddedFormDisplayer.asWidget();
+    public void submit() {
+        service.call(new RemoteCallback<Long>() {
+            @Override
+            public void callback(Long processInstanceId) {
+                loadForm();
+                newProcessInstanceEvent.fire(new NewProcessInstanceEvent(serverTemplateId,
+                                                                         domainId,
+                                                                         processInstanceId,
+                                                                         processId,
+                                                                         processId,
+                                                                         1));
+                final String message = Constants.INSTANCE.ProcessStarted(processInstanceId);
+                notificationEvent.fire(new NotificationEvent(message, NotificationEvent.NotificationType.SUCCESS));
+            }
+        }).startProcessFromRenderContext(
+                renderingSettings.getTimestamp(),
+                renderingSettings.getRenderingContext().getModel(),
+                serverTemplateId,
+                domainId,
+                processId,
+                null);
     }
 }

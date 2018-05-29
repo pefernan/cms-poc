@@ -16,14 +16,17 @@
 
 package org.jbpm.workbench.cms.client.components.startProcessForm.widget;
 
-import com.google.gwt.user.client.ui.IsWidget;
+import org.kie.workbench.common.forms.dynamic.service.shared.impl.MapModelRenderingContext;
 import org.uberfire.client.mvp.UberElement;
 
 public interface StartProcessDisplayerView extends UberElement<StartProcessDisplayerView.Presenter> {
 
-    void show();
+    void showFormNotFoundError(String processId);
+
+    void show(MapModelRenderingContext context);
 
     interface Presenter {
-        IsWidget getContent();
+
+        void submit();
     }
 }
