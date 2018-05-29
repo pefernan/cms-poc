@@ -23,6 +23,8 @@ import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.jbpm.workbench.client.i18n.HomeConstants;
 import org.kie.workbench.common.screens.home.model.HomeModel;
 import org.kie.workbench.common.screens.home.model.HomeModelProvider;
+import org.kie.workbench.common.screens.home.model.HomeShortcut;
+import org.kie.workbench.common.screens.home.model.HomeShortcutLink;
 import org.kie.workbench.common.screens.home.model.ModelUtils;
 import org.uberfire.client.mvp.PlaceManager;
 
@@ -43,13 +45,18 @@ public class HomeProducer implements HomeModelProvider {
                                               translationService.format(HomeConstants.SubHeading),
                                               "images/home_bg.jpg");
 
-        model.addShortcut(ModelUtils.makeShortcut("pficon pficon-blueprint",
-                                                  translationService.format(HomeConstants.Design),
-                                                  translationService.format(HomeConstants.DesignDescription),
-                                                  () -> placeManager.goTo(LIBRARY),
-                                                  LIBRARY,
-                                                  PERSPECTIVE));
+        final HomeShortcut design = ModelUtils.makeShortcut("pficon pficon-blueprint",
+                                                            translationService.format(HomeConstants.Design),
+                                                            translationService.format(HomeConstants.DesignDescription),
+                                                            () -> placeManager.goTo(LIBRARY),
+                                                            LIBRARY,
+                                                            PERSPECTIVE);
+        design.addLink(new HomeShortcutLink(translationService.format(HomeConstants.Projects),
+                                            LIBRARY));
+        design.addLink(new HomeShortcutLink(translationService.format(HomeConstants.Pages),
+                                            CONTENT_MANAGEMENT));
 
+        model.addShortcut(design);
 
         model.addShortcut(ModelUtils.makeShortcut("fa fa-gears",
                                                   translationService.format(HomeConstants.DevOps),
