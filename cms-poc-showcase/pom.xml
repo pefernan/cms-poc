@@ -1012,6 +1012,18 @@
       <artifactId>dashbuilder-navigation-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-navigation-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dashbuilder</groupId>
+      <artifactId>dashbuilder-cms-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Start Forms Engine -->
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
@@ -1561,51 +1573,44 @@
       <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.kie.server</groupId>
-      <artifactId>kie-server</artifactId>
-      <classifier>ee7</classifier>
-      <type>war</type>
-      <scope>test</scope>
-    </dependency>
 
     <!-- CMS POC -->
     <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>kie-wb-common-forms-cms-layout-components-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>kie-wb-common-forms-cms-layout-components-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>kie-wb-common-forms-cms-persistence-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>kie-wb-common-forms-cms-persistence-backend</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.kie.workbench.forms</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>kie-wb-common-forms-cms-persistence-jpa</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.jbpm</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>jbpm-wb-cms-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jbpm</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>jbpm-wb-cms-backend</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jbpm</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>jbpm-wb-cms-client</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -1622,7 +1627,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
           <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
-          <extraJvmArgs>-Xms1g -Xmx5g -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${jboss.home} -Derrai.dynamic_validation.enabled=true -Dorg.kie.demo=false -Dorg.kie.clean.onstartup=true -Dorg.kie.git.deployments=true -Dorg.uberfire.async.executor.safemode=true -Derrai.dev.context=jbpm-wb-showcase</extraJvmArgs>
+          <extraJvmArgs>-Xms1g -Xmx6g -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${jboss.home} -Derrai.dynamic_validation.enabled=true -Dorg.kie.demo=false -Dorg.kie.clean.onstartup=true -Dorg.kie.git.deployments=true -Dorg.uberfire.async.executor.safemode=true -Derrai.dev.context=jbpm-wb-showcase</extraJvmArgs>
           <module>org.jbpm.workbench.FastCompilejBPMShowcase</module>
           <logLevel>INFO</logLevel>
           <noServer>false</noServer>
@@ -1804,6 +1809,8 @@
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-renderer-google</compileSourcesArtifact>
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-renderer-default</compileSourcesArtifact>
             <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.dashbuilder:dashbuilder-navigation-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.dashbuilder:dashbuilder-cms-client</compileSourcesArtifact>
 
             <!-- jBPM Designer -->
             <compileSourcesArtifact>org.jbpm:jbpm-designer-api</compileSourcesArtifact>
@@ -1814,11 +1821,11 @@
             <compileSourcesArtifact>org.jbpm:jbpm-wb-dashboard-client</compileSourcesArtifact>
 
             <!-- CMS POC -->
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-layout-components-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-cms-persistence-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-wb-cms-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.jbpm:jbpm-wb-cms-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.appformer.cms:kie-wb-common-forms-cms-layout-components-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.appformer.cms:kie-wb-common-forms-cms-layout-components-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.appformer.cms:kie-wb-common-forms-cms-persistence-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.appformer.cms:jbpm-wb-cms-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.appformer.cms:jbpm-wb-cms-client</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
         </configuration>
@@ -1886,7 +1893,7 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack</id>
+            <id>unpack-wildfly</id>
             <phase>process-resources</phase>
             <goals>
               <goal>unpack</goal>

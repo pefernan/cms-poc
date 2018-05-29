@@ -50,4 +50,10 @@ public class HomeConstants {
     @TranslationKey(defaultValue = "")
     public static final String TrackDescription = "TrackDescription";
 
+    @TranslationKey(defaultValue = "")
+    public static final String Projects = "HomeProducer.Projects";
+
+    @TranslationKey(defaultValue = "")
+    public static final String Pages = "HomeProducer.Pages";
+
 }

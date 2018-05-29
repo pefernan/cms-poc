@@ -15,9 +15,6 @@
  */
 package org.jbpm.workbench.client;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -38,8 +35,6 @@ import org.jboss.errai.security.shared.api.identity.User;
 import org.jboss.errai.ui.shared.api.annotations.Bundle;
 import org.jbpm.workbench.client.i18n.Constants;
 import org.jbpm.workbench.client.navigation.NavTreeDefinitions;
-import org.jbpm.workbench.client.perspectives.ProcessAdminSettingsPerspective;
-import org.jbpm.workbench.client.perspectives.TaskAdminSettingsPerspective;
 import org.kie.workbench.common.workbench.client.admin.DefaultAdminPageHelper;
 import org.kie.workbench.common.workbench.client.entrypoint.DefaultWorkbenchEntryPoint;
 import org.kie.workbench.common.workbench.client.menu.DefaultWorkbenchFeaturesMenusHelper;
@@ -49,18 +44,13 @@ import org.uberfire.client.workbench.widgets.menu.megamenu.WorkbenchMegaMenuPres
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveGroupEvent;
 import org.uberfire.ext.security.management.client.widgets.management.events.SaveRoleEvent;
 import org.uberfire.workbench.model.menu.MenuFactory;
-import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.Menus;
-
-import static org.kie.workbench.common.workbench.client.PerspectiveIds.*;
 
 @EntryPoint
 @Bundle("i18n/HomeConstants.properties")
 public class ShowcaseEntryPoint extends DefaultWorkbenchEntryPoint {
 
     protected Constants constants = Constants.INSTANCE;
-
-    protected org.jbpm.workbench.common.client.resources.i18n.Constants commonConstants = org.jbpm.workbench.common.client.resources.i18n.Constants.INSTANCE;
 
     protected SyncBeanManager iocManager;
 
@@ -73,7 +63,9 @@ public class ShowcaseEntryPoint extends DefaultWorkbenchEntryPoint {
     protected DefaultAdminPageHelper adminPageHelper;
 
     protected NavTreeDefinitions navTreeDefinitions;
+
     protected NavigationManager navigationManager;
+
     protected NavigationExplorerScreen navigationExplorerScreen;
 
     @Inject
@@ -138,46 +130,6 @@ public class ShowcaseEntryPoint extends DefaultWorkbenchEntryPoint {
     @Override
     protected void setupAdminPage() {
         adminPageHelper.setup();
-    }
-
-    protected List<? extends MenuItem> getAuthoringViews() {
-        return Arrays.asList(
-                MenuFactory.newSimpleItem(constants.Project_Authoring()).perspective(LIBRARY).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.artifactRepository()).perspective(GUVNOR_M2REPO).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.Administration()).perspective(ADMINISTRATION).endMenu().build().getItems().get(0)
-        );
-    }
-
-    protected List<? extends MenuItem> getProcessManagementViews() {
-        return Arrays.asList(
-                MenuFactory.newSimpleItem(commonConstants.Process_Definitions()).perspective(PROCESS_DEFINITIONS).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(commonConstants.Process_Instances()).perspective(PROCESS_INSTANCES).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.Process_Instances_Admin()).perspective(ProcessAdminSettingsPerspective.PERSPECTIVE_ID).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(commonConstants.Tasks()).perspective(TASKS_ADMIN).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(commonConstants.ExecutionErrors()).perspective(EXECUTION_ERRORS).endMenu().build().getItems().get(0)
-        );
-    }
-
-    protected List<? extends MenuItem> getDeploymentViews() {
-        return Arrays.asList(
-                MenuFactory.newSimpleItem(constants.Execution_Servers()).perspective(SERVER_MANAGEMENT).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(commonConstants.Jobs()).perspective(JOBS).endMenu().build().getItems().get(0)
-        );
-    }
-
-    protected List<? extends MenuItem> getWorkViews() {
-        return Arrays.asList(
-                MenuFactory.newSimpleItem(commonConstants.Task_Inbox()).perspective(TASKS).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.Tasks_List_Admin()).perspective(TaskAdminSettingsPerspective.PERSPECTIVE_ID).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.Data_Sets()).perspective(DATASET_AUTHORING).endMenu().build().getItems().get(0)
-        );
-    }
-
-    protected List<? extends MenuItem> getDashboardsViews() {
-        return Arrays.asList(
-                MenuFactory.newSimpleItem(constants.Process_Reports()).perspective(PROCESS_DASHBOARD).endMenu().build().getItems().get(0),
-                MenuFactory.newSimpleItem(constants.Task_Reports()).perspective(TASK_DASHBOARD).endMenu().build().getItems().get(0)
-        );
     }
 
     @Produces

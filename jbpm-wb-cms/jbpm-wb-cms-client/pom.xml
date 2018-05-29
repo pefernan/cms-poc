@@ -145,7 +145,7 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jbpm</groupId>
+      <groupId>org.appformer.cms</groupId>
       <artifactId>jbpm-wb-cms-api</artifactId>
     </dependency>
   </dependencies>
