@@ -96,19 +96,16 @@ public class StartProcessDisplayer implements StartProcessDisplayerView.Presente
 
     @Override
     public void submit() {
-        service.call(new RemoteCallback<Long>() {
-            @Override
-            public void callback(Long processInstanceId) {
-                loadForm();
-                newProcessInstanceEvent.fire(new NewProcessInstanceEvent(serverTemplateId,
-                                                                         domainId,
-                                                                         processInstanceId,
-                                                                         processId,
-                                                                         processId,
-                                                                         1));
-                final String message = Constants.INSTANCE.ProcessStarted(processInstanceId);
-                notificationEvent.fire(new NotificationEvent(message, NotificationEvent.NotificationType.SUCCESS));
-            }
+        service.call((RemoteCallback<Long>) processInstanceId -> {
+            loadForm();
+            newProcessInstanceEvent.fire(new NewProcessInstanceEvent(serverTemplateId,
+                                                                     domainId,
+                                                                     processInstanceId,
+                                                                     processId,
+                                                                     processId,
+                                                                     1));
+            final String message = Constants.INSTANCE.ProcessStarted(processInstanceId);
+            notificationEvent.fire(new NotificationEvent(message, NotificationEvent.NotificationType.SUCCESS));
         }).startProcessFromRenderContext(
                 renderingSettings.getTimestamp(),
                 renderingSettings.getRenderingContext().getModel(),

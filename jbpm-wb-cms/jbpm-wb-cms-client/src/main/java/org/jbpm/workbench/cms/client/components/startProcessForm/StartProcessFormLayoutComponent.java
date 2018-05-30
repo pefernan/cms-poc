@@ -31,11 +31,13 @@ import org.jbpm.workbench.cms.client.components.common.settings.SettingsDisplaye
 import org.jbpm.workbench.cms.client.components.startProcessForm.widget.StartProcessDisplayer;
 import org.jbpm.workbench.cms.client.resources.i18n.JbpmWbCMSConstants;
 import org.jbpm.workbench.cms.shared.model.settings.StartProcessFormSettings;
+import org.uberfire.ext.layout.editor.client.api.HasModalConfiguration;
 import org.uberfire.ext.layout.editor.client.api.ModalConfigurationContext;
 import org.uberfire.ext.layout.editor.client.api.RenderingContext;
 
 @Dependent
-public class StartProcessFormLayoutComponent implements JbpmWbDragComponent {
+public class StartProcessFormLayoutComponent implements JbpmWbDragComponent,
+                                                        HasModalConfiguration {
 
     private final static String ServerTemplateId = "serverTemplateId";
     private final static String DomainId = "domainId";

@@ -66,7 +66,9 @@ public class StartProcessDisplayerViewImpl implements StartProcessDisplayerView,
 
     @EventHandler("submit")
     private void onSubmit(ClickEvent click) {
-        submit.setHidden(true);
-        presenter.submit();
+        if(form.isValid()) {
+            submit.setHidden(true);
+            presenter.submit();
+        }
     }
 }

@@ -30,5 +30,5 @@ public interface JbpmWbCMSConstants {
     String StartProcessFormTitle = "StartProcessForm.title";
 
     @TranslationKey(defaultValue = "")
-    String TaskListTitle = "TaskList.title";
+    String TaskFormTitle = "TaskForm.title";
 }

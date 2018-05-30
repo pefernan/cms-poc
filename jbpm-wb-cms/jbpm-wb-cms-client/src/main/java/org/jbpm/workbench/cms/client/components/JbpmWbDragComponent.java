@@ -23,7 +23,6 @@ import org.uberfire.ext.layout.editor.client.api.LayoutDragComponent;
  * Main interface for those {@link LayoutDragComponent} implementations who want to be listed under the "Process Management"
  * group in the perspective editor's component palette.
  */
-public interface JbpmWbDragComponent extends LayoutDragComponent,
-                                             HasModalConfiguration {
+public interface JbpmWbDragComponent extends LayoutDragComponent {
 
 }
