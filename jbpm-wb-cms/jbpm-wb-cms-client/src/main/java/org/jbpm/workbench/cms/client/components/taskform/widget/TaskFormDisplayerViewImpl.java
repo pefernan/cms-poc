@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import org.jboss.errai.common.client.dom.Button;
 import org.jboss.errai.common.client.dom.DOMUtil;
 import org.jboss.errai.common.client.dom.Div;
+import org.jboss.errai.common.client.dom.Input;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.EventHandler;
@@ -31,6 +32,18 @@ public class TaskFormDisplayerViewImpl implements TaskFormDisplayerView,
     @Inject
     @DataField
     private Div footer;
+
+    @Inject
+    @DataField
+    private Input serverTemplateId;
+
+    @Inject
+    @DataField
+    private Input domainId;
+
+    @Inject
+    @DataField
+    private Input taskId;
 
     @Inject
     @DataField
@@ -64,6 +77,6 @@ public class TaskFormDisplayerViewImpl implements TaskFormDisplayerView,
 
     @EventHandler("start")
     public void onstart(ClickEvent clickEvent) {
-        presenter.startRender();
+        presenter.startRender(serverTemplateId.getValue(), domainId.getValue(), Long.decode(taskId.getValue()));
     }
 }

@@ -160,7 +160,10 @@ public class TaskFormDisplayer implements TaskFormDisplayerView.Presenter,
     }
 
     @Override
-    public void startRender() {
+    public void startRender(String serverTemplateId, String domainId, Long taskId) {
+        this.serverTemplateId = serverTemplateId;
+        this.deploymentId = domainId;
+        this.taskId = taskId;
         show();
     }
 }
