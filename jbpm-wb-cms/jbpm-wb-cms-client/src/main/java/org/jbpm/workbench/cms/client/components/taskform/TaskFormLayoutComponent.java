@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import org.jboss.errai.common.client.ui.ElementWrapperWidget;
+import org.jboss.errai.ioc.client.container.SyncBeanManager;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
 import org.jbpm.workbench.cms.client.components.JbpmWbDragComponent;
 import org.jbpm.workbench.cms.client.components.taskform.widget.TaskFormDisplayer;
@@ -15,12 +16,12 @@ import org.uberfire.ext.layout.editor.client.api.RenderingContext;
 public class TaskFormLayoutComponent implements JbpmWbDragComponent {
 
     private TranslationService translationService;
-    private TaskFormDisplayer displayer;
+    private SyncBeanManager beanManager;
 
     @Inject
-    public TaskFormLayoutComponent(TranslationService translationService, TaskFormDisplayer displayer) {
+    public TaskFormLayoutComponent(TranslationService translationService, SyncBeanManager beanManager) {
         this.translationService = translationService;
-        this.displayer = displayer;
+        this.beanManager = beanManager;
     }
 
     @Override
@@ -39,6 +40,7 @@ public class TaskFormLayoutComponent implements JbpmWbDragComponent {
     }
 
     private IsWidget getWidget(RenderingContext ctx) {
+        TaskFormDisplayer displayer = beanManager.lookupBean(TaskFormDisplayer.class).newInstance();
         return ElementWrapperWidget.getWidget(displayer.getElement());
     }
 }
