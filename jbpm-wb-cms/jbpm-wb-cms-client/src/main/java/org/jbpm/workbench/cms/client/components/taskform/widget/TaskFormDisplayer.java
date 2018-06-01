@@ -6,8 +6,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.GWT;
 import org.gwtbootstrap3.client.ui.constants.ButtonType;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.IsElement;
@@ -22,6 +24,7 @@ import org.jbpm.workbench.forms.service.shared.FormServiceEntryPoint;
 import org.jbpm.workbench.ht.model.TaskSummary;
 import org.jbpm.workbench.ht.model.events.TaskCompletedEvent;
 import org.jbpm.workbench.ht.model.events.TaskRefreshedEvent;
+import org.jbpm.workbench.ht.model.events.TaskSelectionEvent;
 import org.jbpm.workbench.ht.service.TaskService;
 import org.uberfire.mvp.Command;
 
@@ -43,9 +46,9 @@ public class TaskFormDisplayer implements TaskFormDisplayerView.Presenter,
 
     private KieWorkbenchFormRenderingSettings renderingSettings;
 
-    String serverTemplateId = "test-kie-server";
-    String deploymentId = "expensesCMS_1.0.0";
-    Long taskId = Long.valueOf(1);
+    String serverTemplateId;
+    String deploymentId;
+    Long taskId;
 
     @Inject
     public TaskFormDisplayer(TaskFormDisplayerView view, ManagedInstance<TaskFormAction> instance, Caller<FormServiceEntryPoint> formServices, Caller<TaskService> taskService, Caller<KieWorkbenchFormsEntryPoint> service, Event<TaskRefreshedEvent> taskRefreshed, Event<TaskCompletedEvent> taskCompleted, User identity) {
@@ -114,7 +117,7 @@ public class TaskFormDisplayer implements TaskFormDisplayerView.Presenter,
             service.call(response -> {
                 taskCompleted.fire(new TaskCompletedEvent(serverTemplateId, deploymentId, taskId));
                 hide();
-            }).saveTaskStateFromRenderContext(renderingSettings.getTimestamp(), renderingSettings.getRenderingContext().getModel(), serverTemplateId, deploymentId, taskId);
+            }).completeTaskFromContext(renderingSettings.getTimestamp(), renderingSettings.getRenderingContext().getModel(), serverTemplateId, deploymentId, taskId);
         }
     }
 
@@ -165,5 +168,9 @@ public class TaskFormDisplayer implements TaskFormDisplayerView.Presenter,
         this.deploymentId = domainId;
         this.taskId = taskId;
         show();
+    }
+
+    public void onTaskSelected(@Observes TaskSelectionEvent event){
+        startRender(event.getServerTemplateId(), event.getContainerId(), event.getTaskId());
     }
 }

@@ -1,18 +1,13 @@
 package org.jbpm.workbench.cms.client.components.taskform.widget;
 
-import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import org.jboss.errai.common.client.dom.Button;
+import com.google.gwt.core.client.Scheduler;
 import org.jboss.errai.common.client.dom.DOMUtil;
 import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.Input;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.jboss.errai.ui.shared.api.annotations.EventHandler;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.kie.workbench.common.forms.dynamic.client.DynamicFormRenderer;
 import org.kie.workbench.common.forms.dynamic.service.shared.impl.MapModelRenderingContext;
@@ -33,32 +28,16 @@ public class TaskFormDisplayerViewImpl implements TaskFormDisplayerView,
     @DataField
     private Div footer;
 
-    @Inject
-    @DataField
-    private Input serverTemplateId;
-
-    @Inject
-    @DataField
-    private Input domainId;
-
-    @Inject
-    @DataField
-    private Input taskId;
-
-    @Inject
-    @DataField
-    private Button start;
-
     private Presenter presenter;
 
     @Override
-    public void show(MapModelRenderingContext context, List<TaskFormAction> actions) {
+    public void show(MapModelRenderingContext context,
+                     List<TaskFormAction> actions) {
         DOMUtil.removeAllChildren(footer);
         renderer.render(context);
         actions.stream().map(TaskFormAction::getElement).forEach(footer::appendChild);
         container.setHidden(false);
     }
-
 
     @Override
     public void hide() {
@@ -73,10 +52,5 @@ public class TaskFormDisplayerViewImpl implements TaskFormDisplayerView,
     @Override
     public boolean isValid() {
         return renderer.isValid();
-    }
-
-    @EventHandler("start")
-    public void onstart(ClickEvent clickEvent) {
-        presenter.startRender(serverTemplateId.getValue(), domainId.getValue(), Long.decode(taskId.getValue()));
     }
 }
