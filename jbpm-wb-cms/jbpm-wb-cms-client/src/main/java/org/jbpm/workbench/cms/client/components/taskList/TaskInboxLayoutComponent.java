@@ -79,7 +79,7 @@ public class TaskInboxLayoutComponent implements JbpmWbDragComponent,
 
     @Override
     public String getDragComponentTitle() {
-        return translationService.getTranslation(JbpmWbCMSConstants.TaskListTitle);
+        return translationService.getTranslation(JbpmWbCMSConstants.TaskInboxTitle);
     }
 
     @Override

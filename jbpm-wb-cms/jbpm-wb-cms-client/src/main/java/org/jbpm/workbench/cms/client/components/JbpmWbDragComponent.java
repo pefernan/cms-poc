@@ -16,7 +16,6 @@
 
 package org.jbpm.workbench.cms.client.components;
 
-import org.uberfire.ext.layout.editor.client.api.HasModalConfiguration;
 import org.uberfire.ext.layout.editor.client.api.LayoutDragComponent;
 
 /**
